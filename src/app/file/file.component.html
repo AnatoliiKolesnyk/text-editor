@@ -1,0 +1,14 @@
+<div class="file"
+     #selectionContainer>
+  <ng-container *ngFor="let wordMeta of (text$ | async)">
+    <ng-container *ngIf="hasNoFormat(wordMeta)">{{wordMeta.text}}</ng-container>
+    <span *ngIf="!hasNoFormat(wordMeta)"
+          [class.bold]="isBold(wordMeta)"
+          [class.italic]="isItalic(wordMeta)"
+          [class.underlined]="isUnderlined(wordMeta)"
+          [style.color]="wordMeta.color"
+    >{{wordMeta.text}}</span>
+    
+    <ng-container>{{ ' ' }}</ng-container>
+  </ng-container>
+</div>

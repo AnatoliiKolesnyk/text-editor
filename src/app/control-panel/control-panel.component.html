@@ -1,0 +1,44 @@
+<div class="format-actions" (click)="removeSelection()">
+  <button class="format-action"
+          type="button"
+          [class.active]="isSelectionBold()"
+          (click)="controlPanelService.toggleBold()"
+          (mousedown)="$event.preventDefault()"
+          [disabled]="!selectionIsPresent">
+    <b>B</b>
+  </button>
+  <button class="format-action"
+          type="button"
+          [class.active]="isSelectionItalic()"
+          (click)="controlPanelService.toggleItalic()"
+          [disabled]="!selectionIsPresent">
+    <i>I</i>
+  </button>
+  <button class="format-action"
+          type="button"
+          [class.active]="isSelectionUnderline()"
+          (click)="controlPanelService.toggleUnderline()"
+          [disabled]="!selectionIsPresent">
+    <u>U</u>
+  </button>
+</div>
+<div class="color-input"
+     [class.disabled]="!selectionIsPresent">
+  <label for="color-input">
+    Pick Color:
+  </label>
+  <input type="color"
+         id="color-input"
+         (input)="controlPanelService.setColor(colorInput.value)"
+         [value]="getSelectionColor()"
+         #colorInput
+         [disabled]="!selectionIsPresent">
+</div>
+<div class="synonyms"
+     [class.disabled]="!selectionIsPresent">
+  <span class="synonym"
+        *ngFor="let synonym of (synonyms$ | async)"
+        (click)="controlPanelService.replaceWord(synonym)">
+    {{synonym}}
+  </span>
+</div>
