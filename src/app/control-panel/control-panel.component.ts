@@ -74,7 +74,7 @@ export class ControlPanelComponent implements OnInit, OnDestroy {
     // Really ugly huck, for some reason, Selection API doesn't
     // notice that text is unselected on button click
     // This should be fixed in a better way, but it took too long already
-    // this.selectionService.getCurrentSelection().removeAllRanges();
+    this.selectionService.getCurrentSelection().removeAllRanges();
   }
 
   private subscribeOnSelection() {
@@ -88,14 +88,18 @@ export class ControlPanelComponent implements OnInit, OnDestroy {
     this.synonyms$ = this.selectionService.selection$
       .pipe(
         switchMap(selection => {
-          // if (selection.isCollapsed) {
-          //   return of(null);
-          // }
+          if (selection.isCollapsed) {
+            return of([]);
+          }
 
           const selectedWord = selection.toString();
           return this.synonymsService.getSynonyms(selectedWord);
         }),
-        tap(console.log)
       );
+  }
+
+  replaceWord(synonym: string) {
+    this.controlPanelService.replaceWord(synonym);
+    this.removeSelection();
   }
 }

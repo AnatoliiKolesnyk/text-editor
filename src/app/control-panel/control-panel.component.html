@@ -3,7 +3,6 @@
           type="button"
           [class.active]="isSelectionBold()"
           (click)="controlPanelService.toggleBold()"
-          (mousedown)="$event.preventDefault()"
           [disabled]="!selectionIsPresent">
     <b>B</b>
   </button>
@@ -34,11 +33,10 @@
          #colorInput
          [disabled]="!selectionIsPresent">
 </div>
-<div class="synonyms"
-     [class.disabled]="!selectionIsPresent">
-  <span class="synonym"
+<div class="synonyms" *ngIf="(synonyms$ | async)">
+  <button class="synonym"
         *ngFor="let synonym of (synonyms$ | async)"
-        (click)="controlPanelService.replaceWord(synonym)">
+        (click)="replaceWord(synonym)">
     {{synonym}}
-  </span>
+  </button>
 </div>
